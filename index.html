@@ -92,7 +92,7 @@
 
     .tb-brand { display: flex; align-items: center; gap: 13px; text-decoration: none; }
     .tb-logo { width: 38px; height: 38px; border-radius: 7px; overflow: hidden; flex-shrink: 0; box-shadow: 0 2px 12px rgba(0,0,0,0.4); }
-    .tb-logo img { width: 100%; height: 100%; object-fit: cover; }
+    .tb-logo img, .tb-logo svg { width: 100%; height: 100%; display: block; }
     .tb-name { font-family: 'Cormorant SC', serif; font-size: 12px; letter-spacing: 0.12em; line-height: 1.3; font-weight: 600; }
     .tb-name.dark-text { color: var(--ink); }
     .tb-name.light-text { color: white; }
@@ -615,6 +615,79 @@
     .trust-row { display: flex; gap: 20px; justify-content: center; margin-top: 20px; }
     .trust-i { font-family: 'Cormorant SC', serif; font-size: 9px; letter-spacing: 0.16em; color: rgba(255,255,255,0.18); display: flex; align-items: center; gap: 5px; }
 
+    /* ─── CH 5: FOUNDERS ────────────────── */
+    #ch-founders { background: var(--darker); flex-direction: column; }
+    .founders-top {
+      position: absolute; top: 64px; left: 0; right: 0;
+      padding: 24px 52px; display: flex; align-items: baseline; gap: 20px;
+    }
+    .founders-top-title {
+      font-family: 'Playfair Display', serif; font-size: clamp(22px,2.5vw,32px);
+      font-weight: 500; color: white;
+    }
+    .founders-top-sub {
+      font-family: 'Cormorant SC', serif; font-size: 10px; letter-spacing: 0.28em;
+      color: rgba(255,255,255,0.25);
+    }
+    .founders-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: rgba(255,255,255,0.05);
+      width: 100%; max-width: 1000px;
+    }
+    .founder-card {
+      display: flex; flex-direction: column; align-items: center;
+      padding: 48px 36px; gap: 0;
+      transition: background 0.3s;
+      cursor: default; position: relative; overflow: hidden;
+    }
+    .founder-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px; background: var(--red);
+      transform: scaleX(0); transform-origin: center;
+      transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+    .founder-card:hover { background: rgba(255,255,255,0.02); }
+    .founder-card:hover::after { transform: scaleX(1); }
+    .founder-photo-wrap {
+      width: 160px; height: 200px; position: relative; margin-bottom: 28px; flex-shrink: 0;
+    }
+    .founder-photo-wrap::before {
+      content: ''; position: absolute;
+      top: -8px; left: -8px; right: 8px; bottom: 8px;
+      border: 1px solid rgba(193,39,45,0.2);
+    }
+    .founder-photo-wrap img {
+      width: 100%; height: 100%; object-fit: cover; object-position: top;
+      display: block; position: relative; z-index: 1;
+      filter: grayscale(15%); transition: filter 0.4s;
+    }
+    .founder-card:hover .founder-photo-wrap img { filter: grayscale(0%); }
+    .founder-photo-init {
+      width: 100%; height: 100%;
+      background: rgba(193,39,45,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: 56px; color: rgba(193,39,45,0.3);
+      position: relative; z-index: 1;
+    }
+    .founder-role {
+      font-family: 'Cormorant SC', serif; font-size: 9.5px; letter-spacing: 0.28em;
+      color: var(--red); margin-bottom: 10px; text-align: center;
+    }
+    .founder-name {
+      font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 500;
+      color: white; text-align: center; margin-bottom: 10px;
+    }
+    .founder-desc {
+      font-family: 'Lora', serif; font-style: italic; font-size: 13px;
+      color: rgba(255,255,255,0.35); text-align: center; line-height: 1.65;
+    }
+    @media (max-width: 820px) {
+      .founders-grid { grid-template-columns: 1fr; }
+      .founder-card { padding: 36px 24px; }
+      #ch-founders { height: auto; min-height: 100svh; }
+    }
+
     /* ─── FOOTER (outside snap) ──────── */
     .footer-outer {
       scroll-snap-align: start;
@@ -702,7 +775,7 @@
 <header class="topbar dark" id="topbar">
   <a href="#ch-hero" class="tb-brand" onclick="scrollTo('ch-hero')">
     <div class="tb-logo">
-      <img src="https://placehold.co/200x200/C1272D/white?text=JP&font=playfair-display" alt="Jóvenes del Papa">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style="width:100%;height:100%;display:block"><rect width="100" height="100" fill="#C1272D"/><g fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M38 18 L38 72 Q38 86 52 86 Q66 86 66 72" stroke-width="8"/><path d="M38 18 Q38 18 52 18 Q70 18 70 36 Q70 54 52 54 L38 54" stroke-width="8"/><line x1="26" y1="54" x2="64" y2="54" stroke-width="7"/></g></svg>
     </div>
     <span class="tb-name light-text">Fundación<br>Jóvenes del Papa</span>
   </a>
@@ -728,6 +801,10 @@
     <span class="sn-label">ESCRITURA</span>
     <span class="sn-pip"></span>
   </button>
+  <button class="sn-dot" data-target="ch-founders" onclick="scrollTo('ch-founders')">
+    <span class="sn-label">FUNDADORES</span>
+    <span class="sn-pip"></span>
+  </button>
   <button class="sn-dot" data-target="ch-testi" onclick="scrollTo('ch-testi')">
     <span class="sn-label">VOCES</span>
     <span class="sn-pip"></span>
@@ -750,7 +827,7 @@
       <div class="hero-logo-ring">
         <div class="hero-logo-ring-glow"></div>
         <div class="hero-logo">
-          <img src="https://placehold.co/200x200/C1272D/white?text=JP&font=playfair-display" alt="Fundación Jóvenes del Papa Colombia">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style="width:100%;height:100%;display:block"><rect width="100" height="100" fill="#C1272D"/><g fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M38 18 L38 72 Q38 86 52 86 Q66 86 66 72" stroke-width="8"/><path d="M38 18 Q38 18 52 18 Q70 18 70 36 Q70 54 52 54 L38 54" stroke-width="8"/><line x1="26" y1="54" x2="64" y2="54" stroke-width="7"/></g></svg>
         </div>
       </div>
 
@@ -860,7 +937,44 @@
     </div>
   </section>
 
-  <!-- ── CH 5: TESTIMONIALS ── -->
+  <!-- ── CH 5: FOUNDERS ── -->
+  <section class="ch" id="ch-founders">
+    <div class="founders-top">
+      <h2 class="founders-top-title">Quienes iniciaron el Camino</h2>
+      <span class="founders-top-sub">FUNDADORES</span>
+    </div>
+    <div class="founders-grid">
+      <div class="founder-card">
+        <div class="founder-photo-wrap">
+          <img id="img-kiko" src="" alt="Kiko Argüello" style="display:none">
+          <div class="founder-photo-init" id="init-kiko">KA</div>
+        </div>
+        <p class="founder-role">CO-FUNDADOR</p>
+        <h3 class="founder-name">Kiko Argüello</h3>
+        <p class="founder-desc">Artista y catequista. Inició el Camino Neocatecumenal en las chabolas de Madrid en 1964.</p>
+      </div>
+      <div class="founder-card">
+        <div class="founder-photo-wrap">
+          <img id="img-mario" src="" alt="Mario Pezzi" style="display:none">
+          <div class="founder-photo-init" id="init-mario">MP</div>
+        </div>
+        <p class="founder-role">CO-FUNDADOR</p>
+        <h3 class="founder-name">Mario Pezzi</h3>
+        <p class="founder-desc">Sacerdote italiano que acompañó el crecimiento del Camino hasta los confines del mundo.</p>
+      </div>
+      <div class="founder-card">
+        <div class="founder-photo-wrap">
+          <img id="img-carmen" src="" alt="Carmen Hernández" style="display:none">
+          <div class="founder-photo-init" id="init-carmen">CH</div>
+        </div>
+        <p class="founder-role">CO-FUNDADORA</p>
+        <h3 class="founder-name">Carmen Hernández</h3>
+        <p class="founder-desc">Teóloga y misionera. Unió su vida a la misión del Camino Neocatecumenal desde sus inicios.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CH 6: TESTIMONIALS ── -->
   <section class="ch" id="ch-testi">
     <img class="testi-bg-img" src="https://placehold.co/1400x600/1A1411/C1272D?text=·" alt="">
     <div class="testi-bg"></div>
@@ -941,7 +1055,7 @@
   <div class="footer-outer">
     <footer>
       <div class="ft-left">
-        <div class="ft-logo"><img src="https://placehold.co/200x200/C1272D/white?text=JP&font=playfair-display" alt="Logo"></div>
+        <div class="ft-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style="width:100%;height:100%;display:block"><rect width="100" height="100" fill="#C1272D"/><g fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M38 18 L38 72 Q38 86 52 86 Q66 86 66 72" stroke-width="8"/><path d="M38 18 Q38 18 52 18 Q70 18 70 36 Q70 54 52 54 L38 54" stroke-width="8"/><line x1="26" y1="54" x2="64" y2="54" stroke-width="7"/></g></svg></div>
         <div class="ft-name">FUNDACIÓN JÓVENES DEL PAPA</div>
         <p class="ft-verse">"Yo soy el camino, la verdad y la vida." — Juan 14:6</p>
       </div>
@@ -1001,12 +1115,13 @@ document.querySelectorAll('a, button, .amt, .testi-arrow, .sn-dot, .mission-col'
    CHAPTER SYSTEM
 ═══════════════════════════════════════ */
 const chapters = [
-  { id:'ch-hero',    label:'01 / 06 · INICIO',      theme:'dark'  },
-  { id:'ch-impact',  label:'02 / 06 · IMPACTO',     theme:'red'   },
-  { id:'ch-mission', label:'03 / 06 · MISIÓN',      theme:'dark'  },
-  { id:'ch-verse',   label:'04 / 06 · ESCRITURA',   theme:'light' },
-  { id:'ch-testi',   label:'05 / 06 · TESTIMONIOS', theme:'dark'  },
-  { id:'ch-donate',  label:'06 / 06 · DONAR',       theme:'dark'  },
+  { id:'ch-hero',     label:'01 / 07 · INICIO',      theme:'dark'  },
+  { id:'ch-impact',   label:'02 / 07 · IMPACTO',     theme:'red'   },
+  { id:'ch-mission',  label:'03 / 07 · MISIÓN',      theme:'dark'  },
+  { id:'ch-verse',    label:'04 / 07 · ESCRITURA',   theme:'light' },
+  { id:'ch-founders', label:'05 / 07 · FUNDADORES',  theme:'dark'  },
+  { id:'ch-testi',    label:'06 / 07 · TESTIMONIOS', theme:'dark'  },
+  { id:'ch-donate',   label:'07 / 07 · DONAR',       theme:'dark'  },
 ];
 
 const topbar  = document.getElementById('topbar');
